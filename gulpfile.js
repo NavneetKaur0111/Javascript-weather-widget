@@ -60,7 +60,7 @@ function scriptsTask() {
 function deployTask () {
   return surge({
     project: './dist',
-    domain: 'holyspice.surge.sh'
+    domain: 'https://navneets-weather-widget.surge.sh'
   })
 }
 
