@@ -31,13 +31,10 @@ function findCurrentWeather(lat,long) {
 }
 
 function printCurrentWeather(weather) {
-  // console.log(weather)
-  // console.log(weather.main.temp)
-  // console.log(weather.weather[0].description)
   currentConditionsEle.innerHTML = "";
   currentConditionsEle.insertAdjacentHTML('beforeend', 
   `<h2>Current Conditions</h2>
-  <img src="http://openweathermap.org/img/wn/01d@2x.png" />
+  <img src="http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png" />
   <div class="current">
     <div class="temp">${weather.main.temp}℃</div>
     <div class="condition">${weather.weather[0].description}</div>
