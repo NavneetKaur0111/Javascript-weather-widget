@@ -50,7 +50,6 @@ function findCurrentWeather(lat,long) {
   fetch(`${baseUrl}weather?lat=${lat}&lon=${long}&units=metric&${apikey}`)
     .then((data) => data.json())
     .then((weatherResp) => {
-      console.log(weatherResp)
       printCurrentWeather(weatherResp)
     })
 }
@@ -61,7 +60,7 @@ function printCurrentWeather(weatherResp) {
   `<h2>Current Conditions</h2>
   <img src="http://openweathermap.org/img/wn/${weatherResp.weather[0].icon}@2x.png" />
   <div class="current">
-    <div class="temp">${weatherResp.main.temp}℃</div>
+    <div class="temp">${Math.floor(weatherResp.main.temp)}℃</div>
     <div class="condition">${weatherResp.weather[0].description}</div>
   </div>`)
 }
@@ -70,7 +69,6 @@ function findWeatherForecast(lat,long) {
   fetch(`${baseUrl}forecast?lat=${lat}&lon=${long}&units=metric&${apikey}`)
   .then((data) => data.json())
   .then((weatherResp) => {
-    console.log(weatherResp);
     collectForecastedWeatherData(weatherResp);
     printForecastWeatherData();
     
@@ -79,15 +77,14 @@ function findWeatherForecast(lat,long) {
 
 function collectForecastedWeatherData(weather) {
   weather.list.forEach(weatherInfo=> {
-    console.log(weatherInfo)
     const currentDate = new Date(weatherInfo.dt_txt)
     const difference = Math.ceil(currentDate.getDate() - todaysDate.getDate())
 
     console.log(Math.ceil(currentDate.getDate() - todaysDate.getDate()))
     if(weatherObj[difference] !== undefined) {
       weatherObj[difference]["day"] = currentDate.getDay();
-      weatherObj[difference]["low"].push(weatherInfo.main.temp_min)
-      weatherObj[difference]["high"].push(weatherInfo.main.temp_max)
+      weatherObj[difference]["low"].push(Math.floor(weatherInfo.main.temp_min))
+      weatherObj[difference]["high"].push(Math.floor(weatherInfo.main.temp_max))
       if(currentDate.getHours() === 12) {
         weatherObj[difference]["icon"] = weatherInfo.weather[0].icon
         weatherObj[difference]["description"] = weatherInfo.weather[0].description
