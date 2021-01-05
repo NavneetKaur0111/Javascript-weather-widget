@@ -75,12 +75,14 @@ function findWeatherForecast(lat,long) {
   })
 }
 
+function getDaysDiff(d1, d2) {
+  return Math.floor((Date.UTC(d1.getFullYear(), d1.getMonth(), d1.getDate()) - Date.UTC(d2.getFullYear(), d2.getMonth(), d2.getDate()) ) /(1000 * 60 * 60 * 24) );
+} 
+
 function collectForecastedWeatherData(weather) {
   weather.list.forEach(weatherInfo=> {
     const currentDate = new Date(weatherInfo.dt_txt)
-    const difference = Math.ceil(currentDate.getDate() - todaysDate.getDate())
-
-    console.log(Math.ceil(currentDate.getDate() - todaysDate.getDate()))
+    const difference = getDaysDiff(currentDate, todaysDate)
     if(weatherObj[difference] !== undefined) {
       weatherObj[difference]["day"] = currentDate.getDay();
       weatherObj[difference]["low"].push(Math.floor(weatherInfo.main.temp_min))
